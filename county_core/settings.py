@@ -28,10 +28,14 @@ SECRET_KEY = 'django-insecure-u_cjiddvc2anbilzndkpo014^r)8gg!x_mgi)zk^508clh@@vy
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '8d08-41-72-208-214.ngrok-free.app']
-
-
+# Allow Render deployment domain when using Render
+if os.environ.get('RENDER'):
+    ALLOWED_HOSTS.append('machakos-ict-system.onrender.com')
 
 # Application definition
 
@@ -86,13 +90,13 @@ WSGI_APPLICATION = 'county_core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-USE_RENDER = os.getenv("RENDER", False)
+
+USE_RENDER = os.getenv("RENDER") == "True"  # This will return True only if RENDER=True
 
 if USE_RENDER:
     DATABASES = {
         'default': dj_database_url.config(
-            default=os.getenv("DATABASE_URL"),
-            conn_max_age=600,
+            default=os.environ.get('DATABASE_URL')  # Correct env var name here
         )
     }
 else:
