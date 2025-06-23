@@ -22,6 +22,12 @@ def list_pending_users(request):
     users = CustomUser.objects.filter(is_approved=False)
     serializer = UserRegistrationSerializer(users, many=True)
     return Response(serializer.data)
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def list_approved_users(request):
+    users = CustomUser.objects.filter(is_approved=True)
+    serializer = UserRegistrationSerializer(users, many=True)
+    return Response(serializer.data)
 
 @api_view(['PATCH'])
 @permission_classes([IsAdminUser])

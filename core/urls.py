@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterUserView, list_pending_users, approve_user, asset_list_create, assign_asset, asset_maintenance_logs, get_audit_logs
+from .views import RegisterUserView, list_pending_users, approve_user, asset_list_create, assign_asset, asset_maintenance_logs, get_audit_logs, list_approved_users
 
 urlpatterns = [
     path('auth/register/', RegisterUserView.as_view(), name='register'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('assets/<int:asset_id>/assign/', assign_asset, name='assign-asset'),
     path('assets/<int:asset_id>/maintenance/', asset_maintenance_logs, name='asset-maintenance'),
     path('logs/', get_audit_logs, name='audit-logs'),
+    path('users/approved/', list_approved_users, name='approved-users'),
 ]
 # This file defines the URL patterns for the core application, including user registration and management endpoints.
 # It maps URLs to views that handle user registration, listing pending users, and approving users.
